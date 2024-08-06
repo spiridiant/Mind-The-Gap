@@ -1,0 +1,11 @@
+h1 {
+    text-align: center;
+}
+
+.about {
+    max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+    text-align-last: center;
+    aligt: center;
+}
