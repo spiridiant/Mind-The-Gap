@@ -11,6 +11,7 @@ h1 {
   font-weight: inherit;
   text-align: center;
   margin: 0;
+  margin-top: 50px;
 }
 
 table {
@@ -19,6 +20,7 @@ table {
   max-width: 600px;
   min-width: 200px;
   margin: auto;
+  margin-top: 50px;
   border: 1px solid lightcyan;
   border-radius: 1rem;
   box-shadow: 0 2px 4px #0003, 0 25px 50px #0000001a;

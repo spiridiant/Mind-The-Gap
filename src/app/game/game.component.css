@@ -1,0 +1,21 @@
+/* styles.css */
+body {
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: #70c5ce;
+}
+
+canvas {
+	border: 2px solid #000;
+	margin-top: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	border: 1px solid lightcyan;
+	border-radius: 1rem;
+	background-color: #97f5ff;
+	box-shadow: 0 2px 4px #0003, 0 25px 50px #0000001a;
+}
