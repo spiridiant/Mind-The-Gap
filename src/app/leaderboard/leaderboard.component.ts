@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Record } from '../../shared/record';
 import { remult } from 'remult';
 import { MatTableModule } from '@angular/material/table';
+import { RecordRepoService } from '../record-repo.service';
 
 @Component({
   selector: 'app-leaderboard',
@@ -13,11 +14,10 @@ import { MatTableModule } from '@angular/material/table';
 export class LeaderboardComponent {
   records: Record[] = [];
   recordRepo = remult.repo(Record);
+  constructor(private recordRepoService: RecordRepoService) {}
+
   ngOnInit(){
-    this.recordRepo.find({
-      orderBy: {
-        score: "desc"
-      }
-    }).then((records) => (this.records = records));
+    
+    this.recordRepoService.getAllRecords().then((records) => this.records = records);
   }
 }

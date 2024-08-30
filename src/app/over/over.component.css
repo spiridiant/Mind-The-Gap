@@ -1,0 +1,25 @@
+.game-over-container {
+    text-align: center;
+    margin: 50px auto;
+    max-width: 300px;
+  }
+  
+  .score-display {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+  
+  .username-input input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1em;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }

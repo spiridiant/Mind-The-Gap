@@ -1,0 +1,12 @@
+<div class="game-over-container">
+    <h2>Game Over</h2>
+    <div class="score-display">
+        <p>Your Score: {{ score }}</p>
+    </div>
+    <form class="username-input">
+        <label for="username">Username: </label>
+        <input [(ngModel)]="newUsername" placeholder="Enter your username" name="newUsername" />
+        <button (click)="submitRecord()">Submit</button>
+    </form>
+    <button (click)="replayGame()">Replay</button>
+</div>
