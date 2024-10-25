@@ -29,11 +29,12 @@ export class OverComponent {
       
       try {
         await this.recordRepoService.addRecord({username: this.newUsername, score: this.score});
+        alert('User record submitted: ' + this.newUsername);
         this.newUsername = ""
       } catch (error: any) {
         alert(error.message)
       }
-      alert('Username submitted:' + this.newUsername);
+      
       
     } else {
       this.newUsername = '';

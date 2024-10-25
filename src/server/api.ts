@@ -8,7 +8,7 @@ console.log(process.env['MONGODB_URL']);
 export const api = remultExpress({
     entities: [Record],
     dataProvider: async () => {
-        const client = new MongoClient(process.env['MONGODB_URL'] || " mongodb://localhost:3002/records");
+        const client = new MongoClient(process.env.MONGODB_URL || " mongodb://localhost:3002/records");
         await client.connect();
         return new MongoDataProvider(client.db("records"), client);
     }
