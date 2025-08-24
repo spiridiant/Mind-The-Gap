@@ -110,14 +110,14 @@ export class GameComponent {
 				this.ctx.fillRect(screenX + 2, this.height + 2, pipe.width - 4, pipeHeight - 4);
 				
 				// Optional: Add a subtle top cap for extra 3D effect
-				this.ctx.fillStyle = '#80E5FF';
-				this.ctx.fillRect(screenX - 2, this.height, pipe.width + 4, 8);
+				this.ctx.fillStyle = '#70e1fdff';
+				this.ctx.fillRect(screenX, this.height, pipe.width, 8);
 				
 				// Top cap shading
-				this.ctx.fillStyle = '#99EAFF';
-				this.ctx.fillRect(screenX - 2, this.height, pipe.width + 4, 2);
+				this.ctx.fillStyle = '#8ae8ffff';
+				this.ctx.fillRect(screenX, this.height, pipe.width , 2);
 				this.ctx.fillStyle = '#4DCCFF';
-				this.ctx.fillRect(screenX - 2, this.height + 6, pipe.width + 4, 2);
+				this.ctx.fillRect(screenX, this.height + 6, pipe.width , 2);
 			}
 		});
 	}
@@ -276,7 +276,7 @@ export class GameComponent {
 
 	drawScene() {
 		// Clear canvas with sky blue background
-		this.ctx.fillStyle = '#87CEEB';
+		this.ctx.fillStyle = '#4fb9ebfd';
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		
 		this.drawPipes();
@@ -298,7 +298,7 @@ export class GameComponent {
 			this.ctx.rotate(this.ladderAngle);
 			
 			// Draw ladder
-			this.ctx.fillStyle = '#ce5600ff';
+			this.ctx.fillStyle = '#c25100ff';
 			this.ctx.fillRect(0, 0, 5, -this.ladderLength);
 			
 			// Draw ladder rungs
