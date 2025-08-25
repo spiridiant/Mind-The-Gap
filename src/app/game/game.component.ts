@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScoreDataService } from '../score-data.service';
 
@@ -9,7 +9,7 @@ import { ScoreDataService } from '../score-data.service';
 	templateUrl: './game.component.html',
 	styleUrl: './game.component.css'
 })
-export class GameComponent {
+export class GameComponent implements OnDestroy {
 	private canvas!: HTMLCanvasElement;
 	private ctx!: CanvasRenderingContext2D;
 	private guy: HTMLImageElement = new Image();
@@ -18,6 +18,10 @@ export class GameComponent {
 	private frame = 0;
 	private height = 300;
 	private gap = 0;
+	
+	// Add a flag to track if component is active
+	private isComponentActive = true;
+	private gameLoopId?: number; // Store animation frame ID
 	
 	// Camera system
 	private cameraX = 0;
@@ -52,6 +56,14 @@ export class GameComponent {
 	currentPipeIndex = 0;
 
 	constructor(private router: Router, private scoreService: ScoreDataService) {}
+
+	// Implement OnDestroy to clean up when component is destroyed
+	ngOnDestroy() {
+		this.isComponentActive = false;
+		if (this.gameLoopId) {
+			cancelAnimationFrame(this.gameLoopId);
+		}
+	}
 
 	private initializePipes() {
 		this.pipes = [];
@@ -145,7 +157,7 @@ export class GameComponent {
 		if (this.isMovingCamera) {
 			const diff = this.targetCameraX - this.cameraX;
 			if (Math.abs(diff) > 1) {
-				this.cameraX += diff * (this.cameraSpeed / 100); // Use cameraSpeed variable
+				this.cameraX += diff * (this.cameraSpeed / 100);
 			} else {
 				this.cameraX = this.targetCameraX;
 				this.isMovingCamera = false;
@@ -179,12 +191,17 @@ export class GameComponent {
 	}
 
 	private loop() {
+		// Check if component is still active before continuing
+		if (!this.isComponentActive) {
+			return;
+		}
+		
 		this.update();
 		this.drawScene();
 		this.frame++;
 		
 		if (this.gameState !== 'gameOver') {
-			requestAnimationFrame(() => this.loop());
+			this.gameLoopId = requestAnimationFrame(() => this.loop());
 		}
 	}
 
@@ -245,8 +262,12 @@ export class GameComponent {
 		if (this.guyWorldY > this.canvas.height) {
 			this.gameState = 'gameOver';
 			this.scoreService.setScore(this.score);
+			
+			// Only navigate if component is still active
 			setTimeout(() => {
-				this.router.navigate(['/over']);
+				if (this.isComponentActive) {
+					this.router.navigate(['/over']);
+				}
 			}, 500);
 		}
 	}
@@ -331,12 +352,6 @@ export class GameComponent {
 		this.ctx.fillStyle = 'black';
 		this.ctx.font = '20px Arial';
 		this.ctx.fillText(`Score: ${this.score}`, 10, 30);
-		
-		// Debug info (remove in production)
-		// this.ctx.fillStyle = 'red';
-		// this.ctx.font = '12px Arial';
-		// this.ctx.fillText(`Camera: ${Math.round(this.cameraX)}`, 10, 50);
-		// this.ctx.fillText(`Pipe Index: ${this.currentPipeIndex}`, 10, 65);
 	}
 
 	@HostListener('document:keydown.space', ['$event'])
@@ -360,7 +375,7 @@ export class GameComponent {
 	}
 
 	growLadder() {
-		if (this.isLadderGrowing && this.gameState === 'playing') {
+		if (this.isLadderGrowing && this.gameState === 'playing' && this.isComponentActive) {
 			this.ladderLength += 3;
 			
 			// Limit maximum ladder length
