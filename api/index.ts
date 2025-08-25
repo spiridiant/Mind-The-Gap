@@ -32,4 +32,5 @@ const api = remultExpress({
 
 app.use(api);
 
-module.exports = app;
+export default app;
+
